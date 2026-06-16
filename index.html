@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Oulmes – Gestion des Machines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-deep:   #0a2540;
+      --blue-mid:    #1a4a8a;
+      --blue-accent: #2770c8;
+      --blue-light:  #e8f0fb;
+      --teal:        #0eb5a0;
+      --teal-light:  #d0f5f1;
+      --white:       #ffffff;
+      --gray-50:     #f8f9fc;
+      --gray-100:    #eef0f5;
+      --gray-200:    #d8dce8;
+      --gray-400:    #8a93a6;
+      --gray-700:    #3a4255;
+      --gray-900:    #111827;
+      --red-soft:    #fff0f0;
+      --red-accent:  #e53935;
+      --shadow-sm:   0 1px 4px rgba(10,37,64,.08);
+      --shadow-md:   0 4px 20px rgba(10,37,64,.12);
+      --shadow-lg:   0 12px 40px rgba(10,37,64,.18);
+      --radius-sm:   8px;
+      --radius-md:   14px;
+      --radius-lg:   22px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      min-height: 100vh;
+    }
+
+    /* ─────────────────── NAV ─────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--blue-deep);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 24px;
+      min-height: 64px;
+      overflow-x: auto;
+    }
+
+    .nav-logo {
+      flex-shrink: 0;
+      margin-right: 28px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,.18);
+      flex-shrink: 0;
+      margin-right: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      list-style: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      color: rgba(255,255,255,.72);
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      transition: background .18s, color .18s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255,255,255,.12);
+      color: var(--white);
+    }
+
+    .nav-links a .nav-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      opacity: 0;
+      transition: opacity .18s;
+    }
+
+    .nav-links a.active .nav-dot { opacity: 1; }
+
+    /* ─────────────────── HERO BANNER ─────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 60%, var(--blue-accent) 100%);
+      padding: 52px 32px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(14,181,160,.18);
+      border: 1px solid rgba(14,181,160,.35);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      position: relative;
+    }
+
+    .hero p {
+      margin-top: 12px;
+      color: rgba(255,255,255,.65);
+      font-size: 15px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    /* ─────────────────── MAIN LAYOUT ─────────────────── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ─────────────────── SECTION ─────────────────── */
+    .machine-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(39,112,200,.3);
+    }
+
+    .section-icon svg { width: 24px; height: 24px; }
+
+    .section-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      letter-spacing: -.01em;
+    }
+
+    .section-badge {
+      margin-left: auto;
+      background: var(--blue-light);
+      color: var(--blue-accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    /* ─────────────────── CARD ─────────────────── */
+    .machine-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+
+    .machine-card:hover { box-shadow: var(--shadow-md); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 24px 20px;
+    }
+
+    .card-image-wrap {
+      flex-shrink: 0;
+      width: 160px;
+      height: 120px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--gray-400);
+    }
+
+    .card-image-placeholder svg { width: 32px; height: 32px; opacity: .5; }
+    .card-image-placeholder span { font-size: 11px; font-weight: 500; }
+
+    .card-info { flex: 1; min-width: 0; }
+
+    .card-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-size: 12px;
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+
+    .meta-chip .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .btn-afficher {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue-accent));
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 10px 20px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .18s, transform .12s, box-shadow .18s;
+      box-shadow: 0 3px 10px rgba(39,112,200,.3);
+      letter-spacing: .01em;
+    }
+
+    .btn-afficher:hover {
+      opacity: .92;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(39,112,200,.4);
+    }
+
+    .btn-afficher svg { width: 16px; height: 16px; transition: transform .2s; }
+    .btn-afficher.open svg { transform: rotate(180deg); }
+
+    /* ─────────────────── PROBLEMS LIST ─────────────────── */
+    .problems-panel {
+      display: none;
+      border-top: 1px solid var(--gray-100);
+      background: var(--gray-50);
+    }
+
+    .problems-panel.open { display: block; }
+
+    .problems-panel-header {
+      padding: 16px 24px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .problem-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .15s;
+    }
+
+    .problem-row:last-child { border-bottom: none; }
+    .problem-row:hover { background: var(--white); }
+
+    .problem-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: var(--blue-light);
+      color: var(--blue-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .problem-text {
+      flex: 1;
+      font-size: 14px;
+      color: var(--gray-700);
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .btn-solution {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: #0a8a7a;
+      border: 1px solid rgba(14,181,160,.25);
+      border-radius: var(--radius-sm);
+      padding: 7px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, box-shadow .15s, transform .12s;
+      white-space: nowrap;
+    }
+
+    .btn-solution:hover {
+      background: #b8ece6;
+      box-shadow: 0 3px 10px rgba(14,181,160,.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-solution svg { width: 14px; height: 14px; }
+
+    /* ─────────────────── MODAL ─────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,37,64,.55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: modalIn .22s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.94) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 24px 24px 18px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .modal-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-sm);
+      background: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-icon svg { width: 22px; height: 22px; color: #0a8a7a; }
+
+    .modal-titles { flex: 1; }
+
+    .modal-machine {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 4px;
+    }
+
+    .modal-panne {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      line-height: 1.3;
+    }
+
+    .modal-close {
+      background: var(--gray-100);
+      border: none;
+      border-radius: var(--radius-sm);
+      width: 34px; height: 34px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-700);
+      transition: background .15s;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover { background: var(--gray-200); }
+    .modal-close svg { width: 18px; height: 18px; }
+
+    .modal-body { padding: 20px 24px 28px; }
+
+    .modal-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-100);
+    }
+
+    .modal-cause-box {
+      background: var(--red-soft);
+      border: 1px solid rgba(229,57,53,.12);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #b71c1c;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .modal-solution-box {
+      background: var(--teal-light);
+      border: 1px solid rgba(14,181,160,.2);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #064e47;
+      line-height: 1.6;
+    }
+
+    /* ─────────────────── RESPONSIVE ─────────────────── */
+    @media (max-width: 700px) {
+      nav { padding: 0 12px; gap: 0; }
+      .nav-logo img { height: 30px; }
+      .nav-links a { font-size: 12px; padding: 7px 10px; }
+      .hero { padding: 36px 16px 32px; }
+      .main { padding: 28px 14px 60px; }
+      .card-top { flex-direction: column; gap: 14px; }
+      .card-image-wrap { width: 100%; height: 180px; }
+      .problem-row { flex-wrap: wrap; gap: 10px; }
+      .btn-solution { width: 100%; justify-content: center; }
+      .section-badge { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links a { padding: 7px 8px; }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 99px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="nav-logo">
+    <!-- Remplacez le src ci-dessous par votre chemin d'image Oulmes -->
+    <img src="YOUR_OULMES_LOGO_SRC_HERE" alt="Oulmes" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <span style="display:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;">Oulmes</span>
+  </div>
+  <div class="nav-divider"></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#souffleuse" class="active"><span class="nav-dot"></span>Souffleuse &amp; Soutireuse</a></li>
+    <li><a href="#bigbuffer"><span class="nav-dot"></span>Big Buffer</a></li>
+    <li><a href="#poigneteuse"><span class="nav-dot"></span>Poigneteuse</a></li>
+    <li><a href="#etiqueteuse"><span class="nav-dot"></span>Étiqueteuse</a></li>
+    <li><a href="#fardeleuse"><span class="nav-dot"></span>Fardeleuse</a></li>
+  </ul>
+</nav>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-eyebrow">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+    Maintenance Industrielle
+  </div>
+  <h1>Gestion des Machines<br>Site Oulmes</h1>
+  <p>Consultez les pannes, causes et solutions correctives pour chaque machine de la ligne de production.</p>
+</div>
+
+<!-- ========== MAIN ========== -->
+<main class="main">
+
+  <!-- ── Souffleuse Et Soutireuse ── -->
+  <section class="machine-section" id="souffleuse">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Souffleuse &amp; Soutireuse</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card" id="card-souffleuse">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <!-- Remplacez src par votre image -->
+          <img src="images/Souffleuse et Soutireuse.jpeg" alt="Souffleuse" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Souffleuse &amp; Soutireuse</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('souffleuse')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-souffleuse">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-souffleuse">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Défaut des capteurs de détection</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Défaut des capteurs de détection','Capteur sale, mauvais réglage, câble débranché ou capteur défectueux','Nettoyer le capteur, vérifier l\'alimentation 24 V DC et les connexions, régler ou remplacer le capteur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Défaillance du système pneumatique</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Défaillance du système pneumatique','Pression d\'air insuffisante, électrovanne en panne, fuite d\'air ou vérin endommagé','Contrôler la pression d\'air, tester l\'électrovanne, réparer les fuites et remplacer les composants défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Blocage du convoyeur de transport</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Blocage du convoyeur de transport','Défaut moteur, variateur en alarme, chaîne mal tendue ou présence d\'un obstacle','Vérifier le moteur et le variateur, régler la transmission et retirer les bouteilles bloquées')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Défaut du système de remplissage</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Défaut du système de remplissage','Capteur de niveau défaillant, vanne bloquée ou manque de produit','Contrôler les capteurs, nettoyer ou remplacer les vannes et vérifier l\'alimentation en produit')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Défaut des servomoteurs et variateurs</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Défaut des servomoteurs et variateurs','Surcharge mécanique, défaut du variateur, problème d\'encodeur ou mauvais paramétrage','Lire les alarmes du variateur, vérifier les connexions et réparer ou remplacer l\'élément défaillant')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Défaut du système de sécurité</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Défaut du système de sécurité','Porte de sécurité ouverte, arrêt d\'urgence activé ou capteur de sécurité défectueux','Fermer les protections, réarmer l\'arrêt d\'urgence et contrôler les capteurs de sécurité')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Panne de communication PLC/HMI</div>
+          <button class="btn-solution" onclick="openModal('Souffleuse &amp; Soutireuse','Panne de communication PLC/HMI','Câble de communication débranché, module d\'E/S défaillant ou alimentation 24 V DC absente','Vérifier le réseau de communication, contrôler les LED de diagnostic du PLC et remplacer le module défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Big Buffer ── -->
+  <section class="machine-section" id="bigbuffer">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          <line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Big Buffer</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <img src="images/Big Buffer.jpeg" alt="Big Buffer" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Big Buffer</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('bigbuffer')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-bigbuffer">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-bigbuffer">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Défaillance d'un capteur photoélectrique</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Défaillance d\'un capteur photoélectrique','Saleté, mauvais alignement, câble endommagé, capteur défectueux','Nettoyage du capteur, réalignement, vérification du câblage, remplacement si nécessaire')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Défaut du variateur de vitesse (Drive Fault)</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Défaut du variateur de vitesse (Drive Fault)','Surcharge moteur, surchauffe, perte d\'alimentation, défaut interne','Diagnostic du code erreur, contrôle de l\'alimentation, réarmement ou remplacement du variateur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Blocage mécanique des bouteilles dans le buffer</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Blocage mécanique des bouteilles dans le buffer','Mauvais réglage des guides, accumulation excessive, bouteille déformée','Déblocage de la zone, réglage des guides, contrôle du flux des bouteilles')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Défaillance du chariot de transfert</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Défaillance du chariot de transfert','Défaut moteur, problème d\'encodeur, blocage mécanique, usure des composants','Vérification du moteur et de l\'encodeur, inspection mécanique, remplacement des pièces usées')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Perte de communication Automate – Variateur</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Perte de communication Automate – Variateur','Défaut de câble Profinet/Profibus, connecteur desserré, panne réseau','Contrôle du réseau industriel, vérification des connecteurs, remplacement du câble défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Usure des roulements ou galets du chariot</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Usure des roulements ou galets du chariot','Fonctionnement prolongé, manque de lubrification, charge excessive','Graissage périodique, remplacement des roulements ou galets usés')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Défaut pneumatique (vérins ou électrovannes)</div>
+          <button class="btn-solution" onclick="openModal('Big Buffer','Défaut pneumatique (vérins ou électrovannes)','Fuite d\'air, pression insuffisante, électrovanne défectueuse, vérin endommagé','Contrôle de la pression, réparation des fuites, remplacement des composants défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Poigneteuse ── -->
+  <section class="machine-section" id="poigneteuse">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+          <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Poigneteuse</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <img src="images/Poigneteuse.jpeg" alt="Poigneteuse" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Poigneteuse</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('poigneteuse')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-poigneteuse">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-poigneteuse">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Absence de détection du bidon</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Absence de détection du bidon','Capteur photoélectrique encrassé, mal réglé ou défectueux','Nettoyer, régler ou remplacer le capteur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Mauvais positionnement du bidon</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Mauvais positionnement du bidon','Mauvais réglage des guides de centrage ou désalignement du convoyeur','Régler les guides et vérifier l\'alignement du convoyeur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Défaut d'alimentation des poignées</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Défaut d\'alimentation des poignées','Blocage du magasin de poignées ou du mécanisme d\'alimentation','Nettoyer et débloquer le système d\'alimentation')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Mauvaise pose de la poignée</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Mauvaise pose de la poignée','Désalignement de la tête de pose ou mauvais réglage mécanique','Réaligner et ajuster la tête de pose')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Défaillance du système pneumatique</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Défaillance du système pneumatique','Fuite d\'air, pression insuffisante ou électrovanne défectueuse','Contrôler la pression, réparer les fuites et remplacer l\'électrovanne si nécessaire')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Usure des éléments mécaniques</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Usure des éléments mécaniques','Usure des courroies, chaînes ou roulements','Effectuer un contrôle périodique et remplacer les pièces usées')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Arrêt de sécurité de la machine</div>
+          <button class="btn-solution" onclick="openModal('Poigneteuse','Arrêt de sécurité de la machine','Activation de l\'arrêt d\'urgence ou ouverture d\'une protection de sécurité','Vérifier les dispositifs de sécurité et réarmer la machine')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Étiqueteuse ── -->
+  <section class="machine-section" id="etiqueteuse">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+          <line x1="7" y1="7" x2="7.01" y2="7"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Étiqueteuse</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <img src="images/Étiqueteuse.jpeg" alt="Étiqueteuse" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Étiqueteuse</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('etiqueteuse')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-etiqueteuse">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-etiqueteuse">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Absence de détection du produit</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Absence de détection du produit','Capteur de présence sale, mal réglé ou défectueux','Nettoyer, régler ou remplacer le capteur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Mauvais positionnement de l'étiquette</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Mauvais positionnement de l\'étiquette','Réglage incorrect du système de guidage ou du convoyeur','Ajuster les guides et recalibrer la machine')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Décollage ou mauvais collage de l'étiquette</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Décollage ou mauvais collage de l\'étiquette','Pression insuffisante du rouleau applicateur ou surface humide','Régler la pression et nettoyer la surface du produit')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Bourrage des étiquettes</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Bourrage des étiquettes','Mauvais enroulement du rouleau ou étiquettes endommagées','Recharger correctement le rouleau et remplacer les étiquettes défectueuses')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Défaut du moteur d'entraînement</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Défaut du moteur d\'entraînement','Surcharge, usure ou panne du moteur','Contrôler le moteur et remplacer les composants défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Défaillance du système pneumatique</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Défaillance du système pneumatique','Fuite d\'air, pression insuffisante ou électrovanne défectueuse','Vérifier le circuit pneumatique et remplacer les éléments défectueux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Arrêt de sécurité de la machine</div>
+          <button class="btn-solution" onclick="openModal('Étiqueteuse','Arrêt de sécurité de la machine','Activation de l\'arrêt d\'urgence ou ouverture d\'une porte de sécurité','Vérifier les dispositifs de sécurité et réarmer la machine')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Fardeleuse ── -->
+  <section class="machine-section" id="fardeleuse">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Fardeleuse</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <img src="images/Fardeleuse.jpeg" alt="Fardeleuse" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Fardeleuse</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('fardeleuse')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-fardeleuse">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-fardeleuse">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Défaut de soudure du film plastique</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Défaut de soudure du film plastique','Température de soudure incorrecte, lame de soudure usée, résistance chauffante défectueuse','Contrôle de la température, nettoyage ou remplacement de la lame et vérification des résistances')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Mauvais déroulement ou rupture du film</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Mauvais déroulement ou rupture du film','Mauvais positionnement de la bobine, tension du film incorrecte, rouleaux d\'entraînement usés','Réglage du porte-bobine, ajustement de la tension et remplacement des rouleaux')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Blocage du convoyeur d'entrée ou de sortie</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Blocage du convoyeur d\'entrée ou de sortie','Accumulation des produits, mauvais réglage des guides, usure mécanique','Élimination du blocage, réglage des guides et contrôle des éléments mécaniques')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Défaut du groupe de coupe du film</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Défaut du groupe de coupe du film','Couteau usé, mauvais réglage mécanique, défaut du capteur de position','Réglage du système de coupe, remplacement du couteau et contrôle du capteur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Défaut moteur ou variateur de vitesse</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Défaut moteur ou variateur de vitesse','Surcharge mécanique, problème moteur, défaut variateur','Diagnostic du variateur, contrôle du moteur et vérification de l\'axe mécanique')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Défaut de détection produit (capteur)</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Défaut de détection produit (capteur)','Capteur sale, mauvais alignement, défaut câblage','Nettoyage, réglage du capteur et contrôle du câblage électrique')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Mauvaise formation du pack</div>
+          <button class="btn-solution" onclick="openModal('Fardeleuse','Mauvaise formation du pack','Mauvais réglage des guides, problème de synchronisation des vitesses, mauvais paramétrage format','Réglage mécanique, synchronisation des convoyeurs et vérification des paramètres')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== MODAL ========== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+      </div>
+      <div class="modal-titles">
+        <div class="modal-machine" id="modalMachine"></div>
+        <div class="modal-panne" id="modalPanne"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-label">Causes possibles</div>
+      <div class="modal-cause-box" id="modalCause"></div>
+      <div class="modal-section-label">Action corrective</div>
+      <div class="modal-solution-box" id="modalSolution"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Toggle problems panel ──
+  function toggleProblems(id) {
+    const panel  = document.getElementById('panel-' + id);
+    const arrow  = document.getElementById('arrow-' + id);
+    const btn    = arrow.closest('.btn-afficher');
+    const isOpen = panel.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.innerHTML = isOpen
+      ? `<svg id="arrow-${id}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><polyline points="6,9 12,15 18,9"/></svg> Masquer les problèmes`
+      : `<svg id="arrow-${id}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg> Afficher les problèmes`;
+  }
+
+  // ── Modal ──
+  function openModal(machine, panne, cause, solution) {
+    document.getElementById('modalMachine').textContent  = machine;
+    document.getElementById('modalPanne').textContent    = panne;
+    document.getElementById('modalCause').textContent    = cause;
+    document.getElementById('modalSolution').textContent = solution;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Active nav highlight on scroll ──
+  const sections = document.querySelectorAll('.machine-section');
+  const navAs    = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAs.forEach(a => a.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
