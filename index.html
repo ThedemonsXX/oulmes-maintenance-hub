@@ -580,6 +580,7 @@
     <li><a href="#poigneteuse"><span class="nav-dot"></span>Poigneteuse</a></li>
     <li><a href="#etiqueteuse"><span class="nav-dot"></span>Étiqueteuse</a></li>
     <li><a href="#fardeleuse"><span class="nav-dot"></span>Fardeleuse</a></li>
+    <li><a href="#palettiseur"><span class="nav-dot"></span>Palettiseur</a></li>
   </ul>
 </nav>
 
@@ -1088,6 +1089,110 @@
           <div class="problem-num">7</div>
           <div class="problem-text">Mauvaise formation du pack</div>
           <button class="btn-solution" onclick="openModal('Fardeleuse','Mauvaise formation du pack','Mauvais réglage des guides, problème de synchronisation des vitesses, mauvais paramétrage format','Réglage mécanique, synchronisation des convoyeurs et vérification des paramètres')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Palettiseur ── -->
+  <section class="machine-section" id="palettiseur">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="14" width="8" height="8" rx="1"/>
+          <rect x="14" y="14" width="8" height="8" rx="1"/>
+          <rect x="8" y="2" width="8" height="8" rx="1"/>
+          <line x1="6" y1="14" x2="6" y2="10"/><line x1="18" y1="14" x2="18" y2="10"/>
+          <line x1="6" y1="10" x2="18" y2="10"/>
+        </svg>
+      </div>
+      <h2 class="section-title">Palettiseur</h2>
+      <span class="section-badge">7 pannes</span>
+    </div>
+    <div class="machine-card">
+      <div class="card-top">
+        <div class="card-image-wrap">
+          <img src="images/palettiseur.jpeg" alt="Palettiseur" onerror="this.parentElement.innerHTML='<div class=\'card-image-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><polyline points=\'21,15 16,10 5,21\'/></svg><span>Image machine</span></div>'" />
+        </div>
+        <div class="card-info">
+          <div class="card-name">Palettiseur</div>
+          <div class="card-meta">
+            <span class="meta-chip"><span class="dot"></span>Ligne de production</span>
+            <span class="meta-chip">7 types de pannes</span>
+          </div>
+          <button class="btn-afficher" onclick="toggleProblems('palettiseur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" id="arrow-palettiseur">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+            Afficher les problèmes
+          </button>
+        </div>
+      </div>
+      <div class="problems-panel" id="panel-palettiseur">
+        <div class="problems-panel-header">Liste des pannes répertoriées</div>
+
+        <div class="problem-row">
+          <div class="problem-num">1</div>
+          <div class="problem-text">Mauvais positionnement des produits sur le convoyeur</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Mauvais positionnement des produits sur le convoyeur','Mauvais réglage des guides, vibration ou déplacement du produit','Réglage des guides et contrôle du convoyeur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">2</div>
+          <div class="problem-text">Non-détection de la pièce par le capteur</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Non-détection de la pièce par le capteur','Capteur sale, mal aligné ou défectueux','Nettoyage, réalignement ou remplacement du capteur')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">3</div>
+          <div class="problem-text">Perte de vide au niveau des ventouses</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Perte de vide au niveau des ventouses','Fuite pneumatique, ventouse usée ou pression insuffisante','Vérification du circuit pneumatique et remplacement des ventouses')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">4</div>
+          <div class="problem-text">Chute du produit pendant le transfert</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Chute du produit pendant le transfert','Perte de vide ou mauvaise préhension','Contrôle du niveau de vide et réglage du système de préhension')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">5</div>
+          <div class="problem-text">Défaillance du moteur du convoyeur</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Défaillance du moteur du convoyeur','Surchauffe, usure mécanique ou problème électrique','Vérification du moteur et maintenance corrective')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">6</div>
+          <div class="problem-text">Accumulation des produits sur le convoyeur</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Accumulation des produits sur le convoyeur','Mauvaise synchronisation entre le robot et le convoyeur, surcharge','Ajustement des vitesses et synchronisation du système')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Afficher solution
+          </button>
+        </div>
+
+        <div class="problem-row">
+          <div class="problem-num">7</div>
+          <div class="problem-text">Arrêt de sécurité de la cellule</div>
+          <button class="btn-solution" onclick="openModal('Palettiseur','Arrêt de sécurité de la cellule','Ouverture d\'une porte de sécurité ou activation de l\'arrêt d\'urgence','Vérification des dispositifs de sécurité et réarmement du système')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             Afficher solution
           </button>
